@@ -36,10 +36,15 @@ namespace RatMaze
                 }
             }
 
+            // print out the maze
+            Console.WriteLine("Initial Maze:");
+            PrintSolution(maze);
+
             // set starting position
             solution[x,y] = 1;
 
             if (RatMazeSolver(x, y, solution)){
+                Console.WriteLine("Solution found:");
                 PrintSolution(solution);
             }else{
                 Console.WriteLine("Solution doesn't exist.");
