@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* This program uses backtracking algorithm to solve the rat
+ * maze problem. It fills the maze with all possible moves
+ * and records the solution so far. When there is no more 
+ * legal move, it backtracks and deletes all the solutions
+ * up to that point.
+ */
+
+using System;
 
 namespace RatMaze
 {
@@ -19,6 +26,7 @@ namespace RatMaze
         static int destX = 5;
         static int destY = 5;
 
+        // define direction the rat can move
         static int[] PossibleMoveX = new int [4] { 1, -1, 0, 0};
         static int[] PossibleMoveY = new int [4] { 0, 0, 1, -1};
 
@@ -50,7 +58,8 @@ namespace RatMaze
                 Console.WriteLine("Solution doesn't exist.");
             }
         }
-        
+       
+        // print the solution matrix
         static void PrintSolution(int[,] solution){
             for (int i = 0; i < solution.GetLength(0); i++){
                 for (int j = 0; j < solution.GetLength(1); j++){
@@ -61,13 +70,14 @@ namespace RatMaze
             Console.WriteLine();
         }
 
+        // check to see if the move is valid
         static bool ValidMove(int x, int y, int[,] solution)
         {
             return (x >= 0 && x < maze.GetLength(0) &&
                     y >= 0 && y < maze.GetLength(1) &&
                     maze[x,y] == 1 && solution[x,y] == 0);
         }
-
+        
         static bool RatMazeSolver(int x, int y, int[,] solution){
             if (x == destX && y == destY) // base case: maze solved
             {
@@ -83,7 +93,7 @@ namespace RatMaze
                     solution[nextX, nextY] = 1;
                     if (RatMazeSolver(nextX, nextY, solution))
                         return true;
-                    solution[nextX, nextY] = 0;
+                    solution[nextX, nextY] = 0; // no solution found, backtrack
                 }
             }
             return false;
